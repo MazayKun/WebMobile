@@ -20,9 +20,9 @@ public class ConnectionManager implements IConnectionManager {
             connection = DriverManager.getConnection(
                     "jdbc:postgresql://host.docker.internal:5433/mobile",
                     "postgres",
-                    "qwerty");
+                    "admin");
         } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e.getStackTrace());
+            e.printStackTrace();
         }
         return connection;
     }
