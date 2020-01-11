@@ -12,15 +12,11 @@ import java.io.IOException;
  * @version 1.0
  */
 
-@WebServlet("/Menu")
-public class RootServlet extends HttpServlet {
-    @Override
-    public void init() throws ServletException {
-        super.init();
-    }
-
+@WebServlet("/Quit")
+public class LeaveAccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/MenuPage.jsp").forward(req, resp);
+        getServletContext().setAttribute("isAuth", false);
+        resp.sendRedirect(req.getContextPath() + "/Menu");
     }
 }

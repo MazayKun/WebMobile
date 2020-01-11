@@ -1,5 +1,22 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
     <body>
+        <c:if test="${isAuth}">
+            <p>You are authorized</p>
+        </c:if>
+        <c:if test="${!isAuth}">
+            <p>You are not authorized</p>
+        </c:if>
+
+        <form method="get" action="${pageContext.request.contextPath}/Authorization" autocomplete="off">
+            <button>Authorization Page</button>
+        </form>
+
+        <form method="get" action="${pageContext.request.contextPath}/Quit" autocomplete="off">
+            <button>Quit account</button>
+        </form>
+
         <form method="get" action="${pageContext.request.contextPath}/Hello" autocomplete="off">
             <button> Hello </button>
         </form>
@@ -12,8 +29,8 @@
             <button> Delete mobile by id</button>
         </form>
 
-        <form method="get" action="${pageContext.request.contextPath}/MobileList" autocomplete="off">
-            <button>Mobile list</button>
+        <form method="get" action="${pageContext.request.contextPath}/AllTablesList" autocomplete="off">
+            <button>All tables</button>
         </form>
 
         <form method="get" action="${pageContext.request.contextPath}/CreateTable" autocomplete="off" >

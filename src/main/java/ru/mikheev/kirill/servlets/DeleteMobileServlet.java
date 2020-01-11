@@ -31,11 +31,15 @@ public class DeleteMobileServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("utf-8");
-        String price = req.getParameter("id");
-        mobileDAO.deleteMobileById(Integer.valueOf(price));
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        if((Boolean) getServletContext().getAttribute("isAuth")) {
+            req.setCharacterEncoding("utf-8");
+            String price = req.getParameter("id");
+            mobileDAO.deleteMobileById(Integer.valueOf(price));
 
-        resp.sendRedirect(req.getContextPath() + "/MobileList");
+            resp.sendRedirect(req.getContextPath() + "/AllTablesList");
+        }else{
+            req.getRequestDispatcher("/PermissionDenied.jsp").forward(req, resp);
+        }
     }
 }

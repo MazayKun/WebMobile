@@ -33,11 +33,15 @@ public class AddMobileServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("utf-8");
-        String model = req.getParameter("model");
-        String price = req.getParameter("price");
-        Mobile mobile = new Mobile(0, model, Integer.valueOf(price));
-        mobileDao.addMobile(mobile);
-        resp.sendRedirect(req.getContextPath() + "/MobileList");
+        if((Boolean) getServletContext().getAttribute("isAuth")) {
+            req.setCharacterEncoding("utf-8");
+            String model = req.getParameter("model");
+            String price = req.getParameter("price");
+            Mobile mobile = new Mobile(0, model, Integer.valueOf(price));
+            mobileDao.addMobile(mobile);
+            resp.sendRedirect(req.getContextPath() + "/AllTablesList");
+        }else {
+            req.getRequestDispatcher("PermissionDenied.jsp").forward(req, resp);
+        }
     }
 }

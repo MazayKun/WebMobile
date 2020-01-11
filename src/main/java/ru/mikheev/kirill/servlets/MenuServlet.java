@@ -1,7 +1,5 @@
 package ru.mikheev.kirill.servlets;
 
-import ru.mikheev.kirill.dao.IMobileDAO;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,24 +12,16 @@ import java.io.IOException;
  * @version 1.0
  */
 
-@WebServlet("/DeleteTable")
-public class DeleteTableServlet extends HttpServlet {
-
-    private IMobileDAO mobileDAO;
-
+@WebServlet("/Menu")
+public class MenuServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
-        mobileDAO = (IMobileDAO) getServletContext().getAttribute("dao");
         super.init();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if((Boolean) getServletContext().getAttribute("isAuth")) {
-            mobileDAO.dropTable();
-            req.getRequestDispatcher("/MenuPage.jsp").forward(req, resp);
-        }else {
-            req.getRequestDispatcher("/PermissionDenied.jsp").forward(req, resp);
-        }
+        req.setAttribute("isAuth", getServletContext().getAttribute("isAuth"));
+        req.getRequestDispatcher("/MenuPage.jsp").forward(req, resp);
     }
 }

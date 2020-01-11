@@ -18,6 +18,26 @@
     </c:forEach>
     </tbody>
 </table>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>E-Mail</th>
+        <th>Phone number</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach var="user" items="${users}">
+        <tr>
+            <td scope="row">${user.id}</td>
+            <td>${user.name}</td>
+            <td>${user.email}</td>
+            <td>${user.phoneNumber}</td>
+        </tr>
+    </c:forEach>
+    </tbody>
+</table>
 
 <br>
 <a href="${pageContext.request.contextPath}/Menu">Main page</a>
