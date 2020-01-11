@@ -21,10 +21,10 @@ import java.util.List;
 @EJB
 public class MobileDAO implements IMobileDAO{
 
-    public static final String INSERT_INTO_MOBILE = "INSERT INTO mobile values (DEFAULT, ?, ?, ?)";
+    public static final String INSERT_INTO_MOBILE = "INSERT INTO mobile values (DEFAULT, ?, ?)";
     public static final String SELECT_FROM_MOBILE = "SELECT * FROM mobile WHERE id = ?";
     public static final String SELECT_ALL_FROM_MOBILE = "SELECT * FROM mobile";
-    public static final String UPDATE_MOBILE = "UPDATE mobile SET model=?, price=?, manufacturer=? WHERE id=?";
+    public static final String UPDATE_MOBILE = "UPDATE mobile SET model=?, price=? WHERE id=?";
     public static final String DELETE_FROM_MOBILE = "DELETE FROM mobile WHERE id=?";
     public static final String DROP_TABLE_MOBILE = "DROP TABLE IF EXISTS mobile;" ;
     public static final String CREATE_TABLE_MOBILE
@@ -60,9 +60,8 @@ public class MobileDAO implements IMobileDAO{
     public void addMobile(Mobile mobile) {
         try(Connection connection = connectionManager.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(INSERT_INTO_MOBILE)) {
-            preparedStatement.setInt(1, mobile.getId());
-            preparedStatement.setString(2, mobile.getModel());
-            preparedStatement.setInt(3, mobile.getPrice());
+            preparedStatement.setString(1, mobile.getModel());
+            preparedStatement.setInt(2, mobile.getPrice());
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();

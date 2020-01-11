@@ -18,11 +18,11 @@ import java.io.IOException;
 @WebServlet("/AddMobile")
 public class AddMobileServlet extends HttpServlet {
 
-    //private IMobileDAO mobileDao;
+    private IMobileDAO mobileDao;
 
     @Override
     public void init() throws ServletException {
-        //mobileDao = (IMobileDAO) getServletContext().getAttribute("dao");
+        mobileDao = (IMobileDAO) getServletContext().getAttribute("dao");
         super.init();
     }
 
@@ -37,8 +37,8 @@ public class AddMobileServlet extends HttpServlet {
         String model = req.getParameter("model");
         String price = req.getParameter("price");
         Mobile mobile = new Mobile(0, model, Integer.valueOf(price));
-        //mobileDao.addMobile(mobile);
+        mobileDao.addMobile(mobile);
 
-        //resp.sendRedirect(req.getContextPath() + "/allmobiles");
+        req.getRequestDispatcher("/MenuPage.jsp").forward(req, resp);
     }
 }

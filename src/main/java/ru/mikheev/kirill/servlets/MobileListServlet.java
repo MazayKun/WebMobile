@@ -1,6 +1,7 @@
 package ru.mikheev.kirill.servlets;
 
 import ru.mikheev.kirill.dao.IMobileDAO;
+import ru.mikheev.kirill.pojo.Mobile;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,14 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
 
 /**
  * @author Kirill Mikheev
  * @version 1.0
  */
 
-@WebServlet("/CreateTable")
-public class CreateTableServlet extends HttpServlet {
+@WebServlet("/MobileList")
+public class MobileListServlet extends HttpServlet {
 
     private IMobileDAO mobileDAO;
 
@@ -27,7 +29,9 @@ public class CreateTableServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        mobileDAO.createTable();
-        req.getRequestDispatcher("/MenuPage.jsp").forward(req, resp);
+        Collection<Mobile> mobiles = mobileDAO.getAllMobiles();
+        req.setAttribute("mobiles", mobiles);
+        req.setAttribute("PageTitle", "Mobiles");
+        req.getRequestDispatcher("/MobileList.jsp").forward(req, resp);
     }
 }

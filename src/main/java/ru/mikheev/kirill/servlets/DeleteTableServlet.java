@@ -14,8 +14,8 @@ import java.io.IOException;
  * @version 1.0
  */
 
-@WebServlet("/CreateTable")
-public class CreateTableServlet extends HttpServlet {
+@WebServlet("/DeleteTable")
+public class DeleteTableServlet extends HttpServlet {
 
     private IMobileDAO mobileDAO;
 
@@ -27,7 +27,7 @@ public class CreateTableServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        mobileDAO.createTable();
+        mobileDAO.dropTable();
         req.getRequestDispatcher("/MenuPage.jsp").forward(req, resp);
     }
 }

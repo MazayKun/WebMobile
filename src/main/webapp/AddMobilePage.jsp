@@ -8,6 +8,7 @@
         <input name="model" type="text" size="40">
         <p>Price : </p>
         <input name="price" type="number" size="40">
+        <br>
         <button type="submit">Add</button>
     </form>
 </body>
