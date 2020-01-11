@@ -8,6 +8,10 @@
             <button> Add mobile </button>
         </form>
 
+        <form method="get" action="${pageContext.request.contextPath}/DeleteMobile" autocomplete="off">
+            <button> Delete mobile by id</button>
+        </form>
+
         <form method="get" action="${pageContext.request.contextPath}/MobileList" autocomplete="off">
             <button>Mobile list</button>
         </form>
