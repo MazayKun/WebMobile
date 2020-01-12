@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
+ * Сервлет отвечает за страничку, которая показывает содержимое всех табличек (кроме столбца паролей у пользователей)
  * @author Kirill Mikheev
  * @version 1.0
  */
@@ -21,9 +22,16 @@ import java.util.Collection;
 @WebServlet("/AllTablesList")
 public class AllTablesServlet extends HttpServlet {
 
+    /**
+     * Даошки для взаимодейтсвия с табличками
+     */
     private IMobileDAO mobileDAO;
     private IUserDAO userDAO;
 
+    /**
+     * Получает из контекста даошки для взаимодейтсивя с табличками
+     * @throws ServletException
+     */
     @Override
     public void init() throws ServletException {
         mobileDAO = (IMobileDAO) getServletContext().getAttribute("dao");
@@ -31,6 +39,13 @@ public class AllTablesServlet extends HttpServlet {
         super.init();
     }
 
+    /**
+     * Отправляет списки объектов из таблиц для заполнения страницы и выдает ее пользователю
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Collection<Mobile> mobiles = mobileDAO.getAllMobiles();

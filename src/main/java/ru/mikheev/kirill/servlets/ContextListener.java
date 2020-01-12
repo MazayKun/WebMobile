@@ -11,6 +11,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 /**
+ * Класс инициализирует допольнительные параметры контекста перед стартом, а перед окончанием работы удаляет их
  * @author Kirill Mikheev
  * @version 1.0
  */
@@ -18,11 +19,17 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class ContextListener implements ServletContextListener {
 
+    /**
+     * Даошки для взаимодейтсвия с таблицами
+     */
     @Inject
     IMobileDAO mobileDAO;
     @Inject
     IUserDAO userDAO;
 
+    /**
+     * Добавляет новые атрибуты к контексту и создает таблицу пользователей, которую тут же заполняет 2-мя новыми
+     */
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         Boolean isAuth = false;
@@ -36,6 +43,9 @@ public class ContextListener implements ServletContextListener {
         userDAO.addUser(new User(0, "normal_user", "0000", "normal_email@normal_mail_service.normal_location_domain", "123456"));
     }
 
+    /**
+     * Удаляет таблицу и все атрибуты, которые были добавлены перед стартом
+     */
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         ServletContext servletContext = sce.getServletContext();

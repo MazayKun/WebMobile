@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * Класс реализует интейрффейс IMobileDAO и отвечает за взаимодейтсиве с табличкой mobile из бд
  * @author Kirill Mikheev
  * @version 1.0
  */
@@ -21,6 +22,9 @@ import java.util.List;
 @EJB
 public class MobileDAO implements IMobileDAO{
 
+    /**
+     * Запросы к базе данных, которые используются в методах
+     */
     public static final String INSERT_INTO_MOBILE = "INSERT INTO mobile values (DEFAULT, ?, ?)";
     public static final String SELECT_FROM_MOBILE = "SELECT * FROM mobile WHERE id = ?";
     public static final String SELECT_ALL_FROM_MOBILE = "SELECT * FROM mobile";
@@ -38,13 +42,23 @@ public class MobileDAO implements IMobileDAO{
             + "    price integer not null\n"
             + ");\n";
 
+    /**
+     * ConnectionManager, который выдает подключение к бд, когда нужно
+     */
     private IConnectionManager connectionManager;
 
+    /**
+     * Конструктор принимает на вход connectionManager
+     * @param connectionManager
+     */
     @Inject
     public MobileDAO(IConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }
 
+    /**
+     * Создает ту самую табличку
+     */
     @Override
     public void createTable() {
         try (Connection connection = connectionManager.getConnection();
@@ -56,6 +70,10 @@ public class MobileDAO implements IMobileDAO{
 
     }
 
+    /**
+     * Добавляет новый элемент в табличку
+     * @param mobile объект, который нужно добавить
+     */
     @Override
     public void addMobile(Mobile mobile) {
         try(Connection connection = connectionManager.getConnection();
@@ -68,6 +86,11 @@ public class MobileDAO implements IMobileDAO{
         }
     }
 
+    /**
+     * Получение мобильника с заданным айдишником из таблички
+     * @param id нужного мобильника
+     * @return объект типа Mobile
+     */
     @Override
     public Mobile getMobileById(int id) {
         Mobile mobile = null;
@@ -84,6 +107,10 @@ public class MobileDAO implements IMobileDAO{
         }
     }
 
+    /**
+     * удаление мобильника с заданным айдишником
+     * @param id мобильника, который нужно удалить
+     */
     @Override
     public void deleteMobileById(int id) {
         try (Connection connection = connectionManager.getConnection();
@@ -95,6 +122,11 @@ public class MobileDAO implements IMobileDAO{
         }
     }
 
+    /**
+     * Изменение мобильника с заданным айдиником
+     * @param id мобильника, который нужно изменить
+     * @param mobile новое значение
+     */
     @Override
     public void updateMobileById(int id, Mobile mobile) {
         try (Connection connection = connectionManager.getConnection();
@@ -109,6 +141,10 @@ public class MobileDAO implements IMobileDAO{
         }
     }
 
+    /**
+     * Возвращает список всех мобильников из таблички
+     * @return объект тиа Collection, который содержит все объекты из таблицы
+     */
     @Override
     public Collection<Mobile> getAllMobiles() {
         List<Mobile> mobileList = new ArrayList<>();
@@ -128,6 +164,9 @@ public class MobileDAO implements IMobileDAO{
         }
     }
 
+    /**
+     * Удаляет таблицу mobile
+     */
     @Override
     public void dropTable() {
         try (Connection connection = connectionManager.getConnection();

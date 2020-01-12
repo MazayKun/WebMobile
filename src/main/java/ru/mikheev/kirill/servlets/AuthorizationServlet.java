@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * Сервлет отвечает за страницу авторизации пользователя
  * @author Kirill Mikheev
  * @version 1.0
  */
@@ -18,19 +19,32 @@ import java.io.IOException;
 @WebServlet("/Authorization")
 public class AuthorizationServlet extends HttpServlet {
 
+    /**
+     * Даошка для взаимодейтсвия с таблицей users
+     */
     private IUserDAO userDAO;
 
+    /**
+     * Получает даошук из контекста
+     */
     @Override
     public void init() throws ServletException {
         userDAO = (IUserDAO) getServletContext().getAttribute("userDao");
         super.init();
     }
 
+    /**
+     * Гет запрос просто отдает пользователю страничку с полями для авторизации
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/AuthPage.jsp").forward(req, resp);
     }
 
+    /**
+     * Пост запрос несет в себе данные авторизации. Метод сверяет эти данные с данными из таблицы, если совпало, то
+     * пользователь теперь авторизован, иначе кидает на страничку с ошибкой
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");

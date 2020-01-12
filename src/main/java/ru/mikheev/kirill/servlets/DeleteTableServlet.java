@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * Сервлет отвечает за кнопку удаления траблицы mobile
  * @author Kirill Mikheev
  * @version 1.0
  */
@@ -17,14 +18,25 @@ import java.io.IOException;
 @WebServlet("/DeleteTable")
 public class DeleteTableServlet extends HttpServlet {
 
+    /**
+     * Даошка для взаимодействия с табичкой mobile
+     */
     private IMobileDAO mobileDAO;
 
+    /**
+     * Получает даошку из атрибутов контекста
+     */
     @Override
     public void init() throws ServletException {
         mobileDAO = (IMobileDAO) getServletContext().getAttribute("dao");
         super.init();
     }
 
+    /**
+     * Гет завпрос проверяет, авторизирован ли пользователь
+     * Если да, то удаление происходит и снова выдается страница главного меню
+     * Если нет, то удаление отклоняется и выдается страница с ошибкой
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if((Boolean) getServletContext().getAttribute("isAuth")) {

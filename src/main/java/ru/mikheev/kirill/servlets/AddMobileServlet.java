@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * Сервлет отвечает за страничку добавления нового мобильника в таблицу mobile
  * @author Kirill Mikheev
  * @version 1.0
  */
@@ -18,19 +19,32 @@ import java.io.IOException;
 @WebServlet("/AddMobile")
 public class AddMobileServlet extends HttpServlet {
 
+    /**
+     * Даошка для взаимодействия с таблицей mobile
+     */
     private IMobileDAO mobileDao;
 
+    /**
+     * При инициализации получает даошку, которая хранится в контексте
+     */
     @Override
     public void init() throws ServletException {
         mobileDao = (IMobileDAO) getServletContext().getAttribute("dao");
         super.init();
     }
 
+    /**
+     * Гет запрос просто отрисоывает страничку
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("AddMobilePage.jsp").forward(req, resp);
     }
 
+    /**
+     * Пост запрос отвечает за добавление мобильника с данными, которые пользовтель ввел на станичке
+     * Он проверяет авторизовался ли пользовтель, если да, то он имеет право добавить, если нет, то кидает страницу с ошибкой
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if((Boolean) getServletContext().getAttribute("isAuth")) {

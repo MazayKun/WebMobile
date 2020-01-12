@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * Класс реализует интейрффейс IUserDAO и отвечает за взаимодейтсиве с табличкой users из бд
  * @author Kirill Mikheev
  * @version 1.0
  */
@@ -21,6 +22,9 @@ import java.util.List;
 @EJB
 public class UserDAO implements IUserDAO {
 
+    /**
+     * Запросы к базе данных, которые используются в методах
+     */
     public static final String INSERT_INTO_USERS = "INSERT INTO users values (DEFAULT, ?, ?, ?, ?)";
     public static final String SELECT_FROM_USERS = "SELECT * FROM users WHERE name = ?";
     public static final String SELECT_ALL_FROM_USERS = "SELECT * FROM users";
@@ -38,13 +42,23 @@ public class UserDAO implements IUserDAO {
             + "    phone_number varchar(100) not null\n"
             + ");\n";
 
+    /**
+     * ConnectionManager, который выдает подключение к бд, когда нужно
+     */
     private IConnectionManager connectionManager;
 
+    /**
+     * Конструктор принимает на вход connectionManager
+     * @param connectionManager
+     */
     @Inject
     public UserDAO(IConnectionManager connectionManager){
         this.connectionManager = connectionManager;
     }
 
+    /**
+     * Создает ту самую табличку
+     */
     @Override
     public void createTable() {
         try (Connection connection = connectionManager.getConnection();
@@ -55,6 +69,10 @@ public class UserDAO implements IUserDAO {
         }
     }
 
+    /**
+     * Добавляет новый объект в табличку
+     * @param user объект, который нужно добавить
+     */
     @Override
     public void addUser(User user) {
         try (Connection connection = connectionManager.getConnection();
@@ -69,6 +87,11 @@ public class UserDAO implements IUserDAO {
         }
     }
 
+    /**
+     * Получение пользователя по его имени
+     * @param name строка, содержащая имя пользователя, который нам нужен
+     * @return
+     */
     @Override
     public User getUserByName(String name) {
         User user = null;
@@ -93,6 +116,10 @@ public class UserDAO implements IUserDAO {
         }
     }
 
+    /**
+     * Возвращает список всех пользователей, которые зарегистрированы
+     * @return Объект типа Collection, который содержит все хранимые в таблице объекты
+     */
     @Override
     public Collection<User> getAllUsers() {
         List<User> usersList = new ArrayList<>();
@@ -118,6 +145,9 @@ public class UserDAO implements IUserDAO {
         }
     }
 
+    /**
+     * Удаляет эту таблицу
+     */
     @Override
     public void dropTable() {
         try (Connection connection = connectionManager.getConnection();

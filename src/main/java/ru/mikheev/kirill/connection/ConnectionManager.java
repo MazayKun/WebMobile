@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
+ * Класс предоставляющий подключение к базе данных
  * @author Kirill Mikheev
  * @version 1.0
  */
@@ -13,6 +14,10 @@ import java.sql.SQLException;
 @EJB
 public class ConnectionManager implements IConnectionManager {
 
+    /**
+     * Метод возвращает подключение к базе данных
+     * @return обеъект типа Connection
+     */
     public Connection getConnection() {
         Connection connection = null;
         try {
